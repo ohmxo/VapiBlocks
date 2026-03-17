@@ -2,7 +2,10 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import Vapi from '@vapi-ai/web';
 
 const publicKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || ""; // Replace with your actual public key
-const assistantId = process.env.NEXT_PUBLIC_VAPI_CODER || ""; // Replace with your actual assistant ID
+const assistantId =
+  process.env.NEXT_PUBLIC_VAPI_CODER ||
+  process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID ||
+  ""; // Replace with your actual assistant ID
 
 const routes: { [key: string]: string } = {
   "visualizer": "/components/visualizer",

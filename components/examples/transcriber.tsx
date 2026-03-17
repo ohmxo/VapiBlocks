@@ -46,7 +46,12 @@ const AvatarFallback = React.forwardRef<
 ));
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-function Transcriber({ conversation }: { conversation: Array<{ role: string; text: string; timestamp: string; isFinal: boolean }> }) {
+type TranscriberProps = {
+  conversation: Array<{ role: string; text: string; timestamp: string; isFinal: boolean }>;
+  className?: string;
+};
+
+function Transcriber({ conversation, className }: TranscriberProps) {
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -56,7 +61,12 @@ function Transcriber({ conversation }: { conversation: Array<{ role: string; tex
   }, [conversation]);
 
   return (
-    <div className="flex flex-col size-full max-w-full mx-auto bg-background rounded-lg shadow-lg overflow-hidden dark:bg-background">
+    <div
+      className={cn(
+        "flex flex-col size-full max-w-full mx-auto bg-background rounded-[32px] shadow-2xl overflow-hidden border border-white/10 dark:bg-background",
+        className
+      )}
+    >
       <div className="bg-secondary px-4 py-3 flex items-center justify-between dark:bg-secondary">
         <div className="font-medium text-foreground dark:text-foreground">Live Transcript</div>
       </div>

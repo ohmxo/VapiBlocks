@@ -1,4 +1,4 @@
-import { components } from "#site/content";
+import { components } from "@/lib/velite-content";
 import { MDXContent } from "@/components/mdx-components";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
@@ -72,8 +72,10 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   }
 
   return (
-    <article className="prose dark:prose-invert justify-start items-start py-10 min-w-full">
-      <MDXContent code={component.body} />
-    </article>
+    <div className="w-full min-h-screen bg-black text-white">
+      <article className="prose prose-invert max-w-none px-6 py-10 lg:px-10">
+        <MDXContent code={component.body} />
+      </article>
+    </div>
   );
 }

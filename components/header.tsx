@@ -12,6 +12,9 @@ import { Badge } from "./ui/badge";
 
 export function Header() {
   const pathname = usePathname();
+  if (pathname === "/app") {
+    return null;
+  }
   // const newComponent =
   //   siteConfig.components.find((component) => component.new) ||
   //   siteConfig.components[0];

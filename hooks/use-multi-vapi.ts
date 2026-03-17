@@ -1,7 +1,7 @@
 import Vapi from "@vapi-ai/web";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const publicKey = "9277e914-73a3-4ccc-9a9c-8f4e20a86ecf"; // Replace with your actual public key
+const publicKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || "";
 
 const useMultVapi = () => {
 	const [volumeLevel, setVolumeLevel] = useState(0);

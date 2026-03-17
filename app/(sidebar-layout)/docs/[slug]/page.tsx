@@ -1,4 +1,4 @@
-import { docs } from "#site/content";
+import { docs } from "@/lib/velite-content";
 import { MDXContent } from "@/components/mdx-components";
 import { notFound } from "next/navigation";
 

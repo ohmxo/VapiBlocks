@@ -40,13 +40,16 @@ function useIsMobile() {
 }
 
 // Pass array of assistantIds to dock
+const defaultAssistantId =
+	process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID || "default-id";
+
 const assistantIds = [
-	"f311b326-bf6f-49c7-b2ca-0d76382bf2fc",
-	"1fc9fcc6-55e1-4168-8c38-e351dd434939",
-	"8d676299-6ff4-4f87-8dcc-0056a4b1eb9a",
-	"41e193b8-920e-4259-b0b6-39b7229d940f",
+	defaultAssistantId,
+	defaultAssistantId,
+	defaultAssistantId,
+	defaultAssistantId,
 	null,
-	"f13d4b25-aafe-40af-b4be-0d4e2e4258e6",
+	defaultAssistantId,
 ];
 const gradients = [
 	"https://products.ls.graphics/mesh-gradients/images/03.-Snowy-Mint_1-p-130x130q80.jpeg",

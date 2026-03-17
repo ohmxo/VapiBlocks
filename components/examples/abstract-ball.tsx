@@ -39,8 +39,11 @@ const AbstractBall: React.FC<any> = ({
   });
 
   useEffect(() => {
-    const width = mountRef.current!.clientWidth;
-    const height = mountRef.current!.clientHeight;
+    const mountElement = mountRef.current;
+    if (!mountElement) return;
+
+    const width = mountElement.clientWidth;
+    const height = mountElement.clientHeight;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(20, width / height, 1, 1000);
@@ -49,7 +52,7 @@ const AbstractBall: React.FC<any> = ({
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.shadowMap.enabled = true;
-    mountRef.current!.appendChild(renderer.domElement);
+    mountElement.appendChild(renderer.domElement);
 
     const geometry = new THREE.IcosahedronGeometry(20, 20);
 
@@ -102,8 +105,8 @@ const AbstractBall: React.FC<any> = ({
     animate();
 
     const handleResize = () => {
-      const width = mountRef.current!.clientWidth;
-      const height = mountRef.current!.clientHeight;
+      const width = mountElement.clientWidth;
+      const height = mountElement.clientHeight;
       renderer.setSize(width, height);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
@@ -120,9 +123,7 @@ const AbstractBall: React.FC<any> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
-      if (mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement);
-      }
+      mountElement.removeChild(renderer.domElement);
       renderer.dispose();
     };
   }, [perlinTime, perlinMorph, perlinDNoise, chromaRGBr, chromaRGBg, chromaRGBb, chromaRGBn, chromaRGBm, sphereWireframe, spherePoints, spherePsize, cameraSpeedY, cameraSpeedX, cameraZoom]);
@@ -143,7 +144,11 @@ const AbstractBall: React.FC<any> = ({
   }, [cameraZoom]);  
 
   return (
-    <div ref={mountRef} style={{ width: '100%', height: '500px' }} className='rounded-2xl mt-2'>
+    <div
+      ref={mountRef}
+      style={{ width: '100%', height: '100%' }}
+      className='h-full min-h-[240px] w-full rounded-2xl'
+    >
       <script id="noiseVertexShader" type="x-shader/x-vertex">
         {`varying vec3 vNormal;
         uniform float time;

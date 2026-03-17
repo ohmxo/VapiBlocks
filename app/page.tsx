@@ -1,20 +1,18 @@
 "use client";
-import { Icons } from "@/components/icons";
 import { Shine } from "@/components/examples/shine";
-import Glob  from "@/components/examples/glob";
 import Logos from "@/components/logos";
-import { ArrowRight, ArrowRightIcon, MicIcon, PhoneOff, Star } from "lucide-react";
+import { ArrowRight, MicIcon, PhoneOff, Star } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import SparklesText from "@/components/ui/sparkle-text";
-import Siri from "@/components/examples/siri";
-import React, { useEffect, useState } from "react";
-import useVapi from "@/hooks/use-vapi"; // Adjust the import path as needed
-import Transcriber from "@/components/examples/transcriber"; // Adjust the import path as needed
+import { useEffect, useState } from "react";
+import useVapi from "@/hooks/use-vapi";
+import Transcriber from "@/components/examples/transcriber";
+import AudioReactiveStage from "@/components/examples/audio-reactive-stage";
 
 
-export default async function Home() {
+export default function Home() {
   return (
     
     <div className="flex flex-col gap-4 container justify-center items-center">
@@ -104,24 +102,36 @@ function HeroLanding() {
 function Hero() {
   const { toggleCall, isSessionActive, volumeLevel, conversation } = useVapi();
   return (
-    <section className="relative w-full mx-auto flex flex-col justify-center items-center gap-8">
-      <div className="flex flex-col gap-5 text-center animate-hero-in">
-        <a
-          rel="noopener noreferrer"
-        >
+    <section className="relative w-full py-10">
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-4 sm:px-6 lg:px-0">
+        <div className="flex flex-col items-center gap-3 text-center">
           <button
             onClick={toggleCall}
-            className="inline-flex items-center space-x-2 p-4 justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-secondary shadow hover:bg-indigo/30 hover:text-indigo"
+            className="inline-flex items-center space-x-2 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-2xl shadow-violet-900/30 transition hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
           >
-           {isSessionActive ? <PhoneOff/> : <MicIcon/>}
+            {isSessionActive ? <PhoneOff className="h-4 w-4" /> : <MicIcon className="h-4 w-4" />}
+            <span className="text-[11px]">{isSessionActive ? "Disconnect" : "Talk to Vapi"}</span>
           </button>
-          <p className="text-sm mt-4 animate" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>Talk to Vapi Blocks</p>
-        </a>
-      </div>
-      <div className="relative flex justify-center items-center aspect-video w-full p-2">
-        <span className="absolute top-75 w-[calc(100%-70%)] h-[calc(100%-70%)] bg-purple-700 blur-[120px]"></span>
-        <div className="size-full mx-auto">
-          <Transcriber conversation={conversation} />
+          <p className="max-w-2xl text-sm text-white/75">
+            Live audio feedback, smarter transcripts, and responsive visuals that react to every word you speak.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-[1.4fr_auto]">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
+              <span>Transcription</span>
+              <span>{isSessionActive ? "Listening" : "Idle"}</span>
+            </div>
+            <Transcriber conversation={conversation} className="min-h-[380px]" />
+          </div>
+
+          <div className="hidden lg:block">
+            <AudioReactiveStage volumeLevel={volumeLevel} isSessionActive={isSessionActive} />
+          </div>
+          <div className="lg:hidden">
+            <AudioReactiveStage volumeLevel={volumeLevel} isSessionActive={isSessionActive} />
+          </div>
         </div>
       </div>
     </section>
